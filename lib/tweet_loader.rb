@@ -14,7 +14,29 @@ class TweetLoader
   
   def get_tweets_by_geo_square(lat1, long1, lat2, long2)
     TweetLoader.streaming.filter(:locations => "#{lat1},#{long1},#{lat2},#{long2}") do |tweet|
-      puts "user: @#{tweet.user.screen_name}, text: #{tweet.text}, created_at: #{tweet.created_at}, lat: #{tweet.geo.lat}, long: #{tweet.geo.long}, user_id: #{tweet.user.id}\n"
+      if acceptable?(tweet)
+        write_to_db(tweet)
+        write_to_console(tweet)
+      end
     end
+  end
+  
+  private
+  
+  def acceptable?(tweet)
+    # Without geo cords
+    return false if !tweet.geo.lat.present? || !tweet.geo.long.present?
+    # Replies
+    return false if tweet.text.first == '@'
+    
+    return true
+  end
+  
+  def write_to_db(tweet)
+    Tweet.create(user_screen_name: tweet.user.screen_name, user_id: tweet.user.id, text: tweet.text, tweet_created_at: tweet.created_at, lat: tweet.geo.lat, long: tweet.geo.long)
+  end
+  
+  def write_to_console(tweet)
+    puts "user: @#{tweet.user.screen_name}, text: #{tweet.text}, created_at: #{tweet.created_at}, lat: #{tweet.geo.lat}, long: #{tweet.geo.long}, user_id: #{tweet.user.id}\n"
   end
 end

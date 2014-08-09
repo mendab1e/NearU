@@ -1,0 +1,33 @@
+- model_class = Tweet
+.page-header
+  %h1=t '.title', :default => model_class.model_name.human.titleize
+
+%p
+  %strong= model_class.human_attribute_name(:long) + ':'
+  %br
+  = @tweet.long
+%p
+  %strong= model_class.human_attribute_name(:lat) + ':'
+  %br
+  = @tweet.lat
+%p
+  %strong= model_class.human_attribute_name(:user_screen_name) + ':'
+  %br
+  = @tweet.user_screen_name
+%p
+  %strong= model_class.human_attribute_name(:text) + ':'
+  %br
+  = @tweet.text
+%p
+  %strong= model_class.human_attribute_name(:tweet_created_at) + ':'
+  %br
+  = @tweet.tweet_created_at
+%p
+  %strong= model_class.human_attribute_name(:user_id) + ':'
+  %br
+  = @tweet.user_id
+
+
+= link_to t('.back', :default => t("helpers.links.back")), tweets_path, :class => 'btn btn-default'
+= link_to t('.edit', :default => t("helpers.links.edit")), edit_tweet_path(@tweet), :class => 'btn btn-default'
+= link_to t('.destroy', :default => t("helpers.links.destroy")), tweet_path(@tweet), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'

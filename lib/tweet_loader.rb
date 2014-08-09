@@ -28,6 +28,9 @@ class TweetLoader
     return false if !tweet.geo.lat.present? || !tweet.geo.long.present?
     # Replies
     return false if tweet.text.first == '@'
+    # Instagram
+    return false if tweet.text.include?('Опубликовано фото')
+    return false if tweet.text.include?('Опубликовано видео')
     
     return true
   end

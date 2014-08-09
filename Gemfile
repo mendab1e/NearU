@@ -22,6 +22,8 @@ gem 'twitter-bootstrap-rails', :git => 'https://github.com/seyhunak/twitter-boot
 gem 'simple_form'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap'
+gem 'n_gram', require: 'n_gram'
+gem 'ruby-stemmer', require: 'lingua/stemmer'
 
 group :development do
   gem 'better_errors'

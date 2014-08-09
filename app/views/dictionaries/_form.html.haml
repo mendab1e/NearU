@@ -1,0 +1,6 @@
+= simple_form_for @dictionary, :html => { :class => 'form-horizontal' } do |f|
+  = f.input :bigram
+  = f.input :count
+  = f.input :weight
+  = f.button :submit, :class => 'btn-primary'
+  = link_to t('.cancel', :default => t("helpers.links.cancel")), dictionaries_path, :class => 'btn btn-default'

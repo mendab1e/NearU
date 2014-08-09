@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140809134607) do
+ActiveRecord::Schema.define(version: 20140809210545) do
+
+  create_table "dictionaries", force: true do |t|
+    t.string   "bigram"
+    t.integer  "count",      default: 0
+    t.integer  "weight",     default: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "dictionaries", ["bigram"], name: "index_dictionaries_on_bigram"
 
   create_table "tweets", force: true do |t|
     t.float    "long"

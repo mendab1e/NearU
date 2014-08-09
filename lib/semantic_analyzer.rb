@@ -30,9 +30,9 @@ class SemanticAnalyzer
   def remove_symbols(text)
     syms = %w(0 1 2 3 4 5 6 7 8 9 . , ! @ ? # ; : ' " / ( ) « » + - —)
     new_text = String.new(text)
-    syms.each{ |s| new_text.gsub!(s, '')}
-
-    new_text
+    syms.each{ |s| new_text.gsub!(s, ' ')}
+    
+    new_text.gsub('  ', ' ')
   end
   
   def remove_stop_words(words)

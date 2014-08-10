@@ -11,7 +11,7 @@ class ArticleLoader
       dictionary.save
     end
   end
-  
+
   def load_all_files_from_texts
     files = Dir[File.join(Rails.root, 'texts', '*')]
     files.each{ |f| load_from_file(f) }

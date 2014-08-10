@@ -8,7 +8,7 @@ class BoardsController < ApplicationController
     lat1 = params[:lat1]
     long2 = params[:long2]
     lat2 = params[:lat2]
-    
+
     if long1.present? && lat1.present? && long2.present? && lat2.present?
       @boards = Board.where('long >= ? and long <= ? and lat >= ? and lat <= ?', long1, long2, lat1, lat2)
     else
@@ -69,8 +69,8 @@ class BoardsController < ApplicationController
       format.json { head :no_content }
     end
   end
-  
-  def notify 
+
+  def notify
     notify = YandexMoney::Notification.new(request.raw_post)
     puts notify
     if notify.acknowledge ExampleStore::Application.config.yandex_money_shop_secret
@@ -85,13 +85,13 @@ class BoardsController < ApplicationController
             :card_holder_name => notify.customer_id, # cause we don't have customer name in notification
             :order_number => notify.transaction_id)
           reset_session
-        else 
+        else
           # notification amount not match with cart amount
           # set error code "100"
-          notify.set_response 100 
+          notify.set_response 100
         end
       end
-    end  
+    end
     res = notify.response
     render text: res
   end

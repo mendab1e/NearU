@@ -8,15 +8,15 @@ class TweetsFilter
       dictionary = Dictionary.find_by_bigram(bigram)
       weight += dictionary.count * count if dictionary
     end
-    
+
     weight > 0 ? true : false
   end
-  
+
   def filter_existed_tweets
     Tweet.all.find_each do |tweet|
       unless acceptable?(tweet)
         tweet.destroy
       end
-    end 
+    end
   end
 end

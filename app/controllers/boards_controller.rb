@@ -4,7 +4,16 @@ class BoardsController < ApplicationController
   # GET /boards
   # GET /boards.json
   def index
-    @boards = Board.all
+    long1 = params[:long1]
+    lat1 = params[:lat1]
+    long2 = params[:long2]
+    lat2 = params[:lat2]
+    
+    if long1.present? && lat1.present? && long2.present? && lat2.present?
+      @boards = Board.where('long >= ? and long <= ? and lat >= ? and lat <= ?', long1, long2, lat1, lat2)
+    else
+      @boards = Board.all.paginate(:page => params[:page], :per_page => 100)
+    end
   end
 
   # GET /boards/1

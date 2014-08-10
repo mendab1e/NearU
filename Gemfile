@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.4'
 # Use sqlite3 as the database for Active Record
@@ -14,7 +13,7 @@ gem 'coffee-rails', '~> 4.0.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
 
-gem 'twitter'
+# UI
 gem 'haml-rails'
 gem 'less-rails'
 gem 'therubyracer'
@@ -22,12 +21,17 @@ gem 'twitter-bootstrap-rails', :git => 'https://github.com/seyhunak/twitter-boot
 gem 'simple_form'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap'
+
+# Logic
+gem 'twitter'
 gem 'n_gram', require: 'n_gram'
 gem 'ruby-stemmer', require: 'lingua/stemmer'
+gem "rails_config"
+
+# Production
 gem "pg", ">= 0.11.0"
 gem 'activerecord-postgresql-adapter'
 gem 'unicorn'
-gem "rails_config"
 
 group :development do
   gem 'better_errors'

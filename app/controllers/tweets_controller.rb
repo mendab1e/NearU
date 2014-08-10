@@ -4,13 +4,9 @@ class TweetsController < ApplicationController
   # GET /tweets
   # GET /tweets.json?lat1=55.73495&long1=37.58637&lat2=55.73678&long2=37.58946
   def index
-    long1 = params[:long1]
-    lat1 = params[:lat1]
-    long2 = params[:long2]
-    lat2 = params[:lat2]
-
-    if long1.present? && lat1.present? && long2.present? && lat2.present?
-      @tweets = Tweet.where('long >= ? and long <= ? and lat >= ? and lat <= ?', long1, long2, lat1, lat2).order('tweet_created_at DESC').limit(1000)
+    if params[:long1].present? & params[:lat1].present? & params[:long2].present? & params[:lat2].present?
+      geo_params = [params[:long1], params[:lat1], params[:long2], params[:lat2]]
+      @tweets = Tweet.for_map(*geo_params).limit(1000)
     else
       @tweets = Tweet.all.paginate(:page => params[:page], :per_page => 100)
     end

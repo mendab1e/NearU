@@ -31,6 +31,7 @@ class TweetLoader
     # Instagram
     return false if tweet.text.include?('Опубликовано фото')
     return false if tweet.text.include?('Опубликовано видео')
+    return false unless TweetsFilter.new.acceptable?(tweet)
     
     return true
   end

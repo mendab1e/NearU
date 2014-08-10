@@ -1,15 +1,11 @@
 Rails.application.routes.draw do
-  resources :boards do
-    collection do
-      get 'notify'
-    end
-  end
+  resources :boards
 
   resources :dictionaries
 
   resources :tweets, except: [:create, :new]
 
-  match '/yandexmoney/notify' => 'boards#notify'
+  match '/yandexmoney/notify' => 'boards#notify', via: [:get]
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

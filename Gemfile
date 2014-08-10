@@ -27,6 +27,7 @@ gem 'ruby-stemmer', require: 'lingua/stemmer'
 gem "pg", ">= 0.11.0"
 gem 'activerecord-postgresql-adapter'
 gem 'unicorn'
+gem "rails_config"
 
 group :development do
   gem 'better_errors'

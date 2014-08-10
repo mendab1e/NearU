@@ -1,12 +1,4 @@
 class TweetLoader
-  def self.streaming
-    @streaming_twitter ||= Twitter::Streaming::Client.new do |config|
-      config.consumer_key        = "PykDIMQvz825frbxcMrJD5OyC"
-      config.consumer_secret     = "9zhVSScb6mBLdeR7YjWO0EycvLNdStKXotZdOLKFeS78EnMo2u"
-      config.access_token        = "68958452-fnFUGD8icHbcPyz2Yz32iXXsYEiN6WzYcJ1h0K3S9"
-      config.access_token_secret = "yvsLdPAKIoRW0UpXYwlLhcSM6hugpXIztAePzbNwr2ffW"
-    end
-  end
 
   def get_tweets_in_moscow
     get_tweets_by_geo_square('37.37847', '55.59171', '37.83989', '55.89781')
@@ -18,6 +10,15 @@ class TweetLoader
         write_to_db(tweet)
         write_to_console(tweet)
       end
+    end
+  end
+
+  def self.streaming
+    @streaming_twitter ||= Twitter::Streaming::Client.new do |config|
+      config.consumer_key        = Settings.twitter.consumer_key
+      config.consumer_secret     = Settings.twitter.consumer_secret
+      config.access_token        = Settings.twitter.access_token
+      config.access_token_secret = Settings.twitter.access_token_secret
     end
   end
 

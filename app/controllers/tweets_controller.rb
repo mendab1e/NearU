@@ -2,7 +2,7 @@ class TweetsController < ApplicationController
   before_action :set_tweet, only: [:show, :edit, :update, :destroy]
 
   # GET /tweets
-  # GET /tweets.json
+  # GET /tweets.json?lat1=55.73495&long1=37.58637&lat2=55.73678&long2=37.58946
   def index
     long1 = params[:long1]
     lat1 = params[:lat1]

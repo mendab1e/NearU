@@ -21,5 +21,6 @@ module Nearu
     # config.i18n.default_locale = :de
     config.autoload_paths << Rails.root.join('lib')
     config.autoload_paths << Rails.root.join("app", "classes")
+    config.yandex_money_shop_secret = 'FE126BC0BE555611E06EBA5BB0E6C6EB097960AEF6393EBA5328A561EC0BA048'
   end
 end

@@ -11,7 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140809210545) do
+ActiveRecord::Schema.define(version: 20140810001802) do
+
+  create_table "boards", force: true do |t|
+    t.string   "text"
+    t.text     "full_text"
+    t.text     "url"
+    t.date     "payed_until"
+    t.float    "lat"
+    t.float    "long"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "boards", ["lat", "long"], name: "index_boards_on_lat_and_long"
 
   create_table "dictionaries", force: true do |t|
     t.string   "bigram"

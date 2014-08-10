@@ -1,0 +1,31 @@
+- model_class = Board
+.page-header
+  %h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
+%table.table.table-striped
+  %thead
+    %tr
+      %th= model_class.human_attribute_name(:id)
+      %th= model_class.human_attribute_name(:text)
+      %th= model_class.human_attribute_name(:full_text)
+      %th= model_class.human_attribute_name(:url)
+      %th= model_class.human_attribute_name(:payed_until)
+      %th= model_class.human_attribute_name(:lat)
+      %th= model_class.human_attribute_name(:long)
+      %th= model_class.human_attribute_name(:created_at)
+      %th=t '.actions', :default => t("helpers.actions")
+  %tbody
+    - @boards.each do |board|
+      %tr
+        %td= link_to board.id, board_path(board)
+        %td= board.text
+        %td= board.full_text
+        %td= board.url
+        %td= board.payed_until
+        %td= board.lat
+        %td= board.long
+        %td=l board.created_at
+        %td
+          = link_to t('.edit', :default => t("helpers.links.edit")), edit_board_path(board), :class => 'btn btn-default btn-xs'
+          = link_to t('.destroy', :default => t("helpers.links.destroy")), board_path(board), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs btn-danger'
+
+= link_to t('.new', :default => t("helpers.links.new")), new_board_path, :class => 'btn btn-primary'

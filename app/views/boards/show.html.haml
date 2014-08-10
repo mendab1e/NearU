@@ -26,15 +26,6 @@
   %strong= model_class.human_attribute_name(:long) + ':'
   %br
   = @board.long
-  
-= payment_service_for @board.id, "CUSTOMER_ID", :amount =>  1, :service => :yandex_money, :currency => 'RUB' do |service|
-  - service.return_url url_for(:only_path => false, :action => 'index', :controller => 'boards')
-  / - service.scid 12345
-  / - service.shopId 123
-  / - service.shopArticleId 1234
-  - service.description
-  = submit_tag "Pay for your Order"
-
 
 = link_to t('.back', :default => t("helpers.links.back")), boards_path, :class => 'btn btn-default'
 = link_to t('.edit', :default => t("helpers.links.edit")), edit_board_path(@board), :class => 'btn btn-default'

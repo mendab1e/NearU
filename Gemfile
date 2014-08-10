@@ -24,12 +24,9 @@ gem 'will_paginate'
 gem 'will_paginate-bootstrap'
 gem 'n_gram', require: 'n_gram'
 gem 'ruby-stemmer', require: 'lingua/stemmer'
-gem 'activemerchant', :git => 'https://github.com/mgfox/active_merchant'
 gem "pg", ">= 0.11.0"
 gem 'activerecord-postgresql-adapter'
 gem 'unicorn'
-gem 'yaml_db', github: 'jetthoughts/yaml_db', ref: 'fb4b6bd7e12de3cffa93e0a298a1e5253d7e92ba'
-
 
 group :development do
   gem 'better_errors'

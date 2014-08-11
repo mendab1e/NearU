@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: boards
+#
+#  id          :integer          not null, primary key
+#  text        :string(255)
+#  full_text   :text
+#  url         :text
+#  payed_until :date
+#  lat         :float
+#  long        :float
+#  created_at  :datetime
+#  updated_at  :datetime
+#
+
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do

@@ -1,14 +1,24 @@
 class TweetLoader
 
   def get_tweets_in_moscow
-    get_tweets_by_geo_square('37.37847', '55.59171', '37.83989', '55.89781')
+    get_tweets_by_geo_square(Settings.city.moscow)
   end
 
-  def get_tweets_by_geo_square(lat1, long1, lat2, long2)
-    TweetLoader.streaming.filter(:locations => "#{lat1},#{long1},#{lat2},#{long2}") do |tweet|
-      if acceptable?(tweet)
-        write_to_db(tweet)
-        write_to_console(tweet)
+  def get_tweets
+    cities = [Settings.city.moscow, Settings.city.spb, Settings.city.ufa].join(',')
+    get_tweets_by_geo_square(cities)
+  end
+
+  # long1,lat1,long2,lat2
+  def get_tweets_by_geo_square(cities)
+    TweetLoader.streaming.filter(:locations => cities) do |tweet|
+      if acceptable?(tweet) && tweet_from_place?(tweet, cities)
+        if TweetsFilter.acceptable?(tweet)
+          write_to_db(tweet)
+          # write_to_console(tweet)
+        else
+          write_to_trash(tweet)
+        end
       end
     end
   end
@@ -32,16 +42,52 @@ class TweetLoader
     # Instagram
     return false if tweet.text.include?('Опубликовано фото')
     return false if tweet.text.include?('Опубликовано видео')
-    return false unless TweetsFilter.new.acceptable?(tweet)
 
     return true
   end
 
+  def tweet_from_place?(tweet, cities)
+    cities = cities.split(',')
+    valid = false
+    (cities.count / 4).times do |i|
+      if cities[i * 4].to_f - 1 <= tweet.geo.long &&
+          tweet.geo.long <= cities[i * 4 + 2].to_f + 1 &&
+          cities[i * 4 + 1].to_f - 1 <= tweet.geo.lat &&
+          tweet.geo.lat <= cities[i * 4 + 3].to_f + 1
+        valid = true
+      end
+    end
+
+    unless valid
+      puts("ALARM #{cities}")
+      write_to_console(tweet)
+    end
+    return valid
+  end
+
+  def write_to_trash(tweet)
+    TrashTweet.create(
+      user_screen_name: tweet.user.screen_name,
+      user_id: tweet.user.id,
+      text: tweet.text,
+      tweet_created_at: tweet.created_at,
+      lat: tweet.geo.lat,
+      long: tweet.geo.long)
+  end
+
   def write_to_db(tweet)
-    Tweet.create(user_screen_name: tweet.user.screen_name, user_id: tweet.user.id, text: tweet.text, tweet_created_at: tweet.created_at, lat: tweet.geo.lat, long: tweet.geo.long)
+    Tweet.create(
+      user_screen_name: tweet.user.screen_name,
+      user_id: tweet.user.id,
+      text: tweet.text,
+      tweet_created_at: tweet.created_at,
+      lat: tweet.geo.lat,
+      long: tweet.geo.long)
   end
 
   def write_to_console(tweet)
-    puts "user: @#{tweet.user.screen_name}, text: #{tweet.text}, created_at: #{tweet.created_at}, lat: #{tweet.geo.lat}, long: #{tweet.geo.long}, user_id: #{tweet.user.id}\n"
+    puts "user: @#{tweet.user.screen_name}, text: #{tweet.text}, created_at:
+      #{tweet.created_at},  long: #{tweet.geo.long}, lat: #{tweet.geo.lat},
+      user_id: #{tweet.user.id}\n"
   end
 end

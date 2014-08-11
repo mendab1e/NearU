@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :trash_tweets, except: [:create, :new]
+
   resources :boards
 
   resources :dictionaries

@@ -1,0 +1,29 @@
+- model_class = TrashTweet
+.page-header
+  %h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
+= will_paginate @trash_tweets, renderer: BootstrapPagination::Rails
+%table.table.table-striped
+  %thead
+    %tr
+      %th= model_class.human_attribute_name(:id)
+      %th= model_class.human_attribute_name(:user_name)
+      %th= model_class.human_attribute_name(:user_id)
+      %th= model_class.human_attribute_name(:text)
+      %th= model_class.human_attribute_name(:long)
+      %th= model_class.human_attribute_name(:lat)
+      %th= model_class.human_attribute_name(:tweet_created_at)
+      %th=t '.actions', :default => t("helpers.actions")
+  %tbody
+    - @trash_tweets.each do |tweet|
+      %tr
+        %td= link_to tweet.id, trash_tweet_path(tweet)
+        %td= link_to "@#{tweet.user_screen_name}", "http://twitter.com/#{tweet.user_screen_name}"
+        %td= tweet.user_id
+        %td= tweet.text
+        %td= tweet.long
+        %td= tweet.lat
+        %td=l tweet.tweet_created_at
+        %td
+          = link_to t('.edit', :default => t("helpers.links.edit")), edit_tweet_path(tweet), :class => 'btn btn-default btn-xs'
+          = link_to t('.destroy', :default => t("helpers.links.destroy")), tweet_path(tweet), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs btn-danger'
+= will_paginate @trash_tweets, renderer: BootstrapPagination::Rails

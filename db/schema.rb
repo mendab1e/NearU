@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140810001802) do
+ActiveRecord::Schema.define(version: 20140811193256) do
 
   create_table "boards", force: true do |t|
     t.string   "text"
@@ -35,6 +35,19 @@ ActiveRecord::Schema.define(version: 20140810001802) do
   end
 
   add_index "dictionaries", ["bigram"], name: "index_dictionaries_on_bigram"
+
+  create_table "trash_tweets", force: true do |t|
+    t.float    "long"
+    t.float    "lat"
+    t.string   "user_screen_name"
+    t.string   "text"
+    t.datetime "tweet_created_at"
+    t.string   "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "trash_tweets", ["long", "lat", "tweet_created_at"], name: "index_trash_tweets_on_long_and_lat_and_tweet_created_at"
 
   create_table "tweets", force: true do |t|
     t.float    "long"

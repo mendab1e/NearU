@@ -1,5 +1,5 @@
 class TweetsFilter
-  def acceptable?(tweet)
+  def self.acceptable?(tweet)
     analyzer = SemanticAnalyzer.new(tweet.text)
     text = analyzer.clear_text
     bigrams = SemanticAnalyzer.build_bigrams(text).ngrams_of_all_data[2]
@@ -14,7 +14,7 @@ class TweetsFilter
 
   def filter_existed_tweets
     Tweet.all.find_each do |tweet|
-      unless acceptable?(tweet)
+      unless TweetsFilter.acceptable?(tweet)
         tweet.destroy
       end
     end

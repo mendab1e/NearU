@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: tweets
+# Table name: trash_tweets
 #
 #  id               :integer          not null, primary key
 #  long             :float
@@ -16,12 +16,12 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do
-  factory :tweet do
-    long 37.501953
-    lat 55.80283
-    user_screen_name "MarinkaBlondie"
-    text "Вот такой уютный домик можно увидеть почти в центре Москвы! @ Поселок Художников http://t.co/M5kPqwKvh9"
-    tweet_created_at "2014-08-10 14:12:19"
-    user_id "212199186"
+  factory :trash_tweet do
+    long 1.5
+    lat 1.5
+    user_screen_name "MyString"
+    text "MyString"
+    tweet_created_at "2014-08-11 23:32:56"
+    user_id "MyString"
   end
 end

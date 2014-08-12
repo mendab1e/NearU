@@ -4,7 +4,7 @@ class DictionariesController < ApplicationController
   # GET /dictionaries
   # GET /dictionaries.json
   def index
-    @dictionaries = Dictionary.all.order('count DESC').paginate(:page => params[:page], :per_page => 100)
+    @dictionaries = Dictionary.all.order('count DESC, created_at ASC').paginate(:page => params[:page], :per_page => 100)
   end
 
   # GET /dictionaries/1

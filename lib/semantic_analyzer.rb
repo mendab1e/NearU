@@ -4,7 +4,9 @@ class SemanticAnalyzer
   end
 
   def clear_text
-    words = remove_symbols(@text).mb_chars.downcase.to_s.split
+    text = sanitize_urls(@text)
+    text = sanitize_emoji(text)
+    words = remove_symbols(text).mb_chars.downcase.to_s.split
     words_without_stops = remove_stop_words(words)
     stemmed_words = stem_words(words_without_stops, 'ru')
 
@@ -21,6 +23,14 @@ class SemanticAnalyzer
   end
 
   private
+
+  def sanitize_urls(text)
+    text.gsub(/(https?:\/\/)?([\w\.]+)\.([a-z]{2,6}\.?)(\/[\w\.]*)*\/?/, '')
+  end
+
+  def sanitize_emoji(text)
+    text.gsub(/[\u{1F600}-\u{1F6FF}]/, ' ')
+  end
 
   def stem_words(words, lang)
     stemmer = Lingua::Stemmer.new(language: lang)

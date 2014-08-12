@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :trash_tweets, except: [:create, :new]
+  resources :trash_tweets, except: [:create, :new] do
+    get 'add_to_dictionary_and_accept', on: :member
+  end
 
   resources :boards
 

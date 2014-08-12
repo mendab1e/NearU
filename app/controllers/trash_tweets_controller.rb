@@ -1,10 +1,25 @@
 class TrashTweetsController < ApplicationController
-  before_action :set_trash_tweet, only: [:show, :edit, :update, :destroy]
+  before_action :set_trash_tweet, only: [:show, :edit, :update, :destroy, :add_to_dictionary_and_accept]
 
   # GET /trash_tweets
   # GET /trash_tweets.json
   def index
     @trash_tweets = TrashTweet.all.paginate(:page => params[:page], :per_page => 100)
+  end
+
+  def add_to_dictionary_and_accept
+    Tweet.create(text: @trash_tweet.text, long: @trash_tweet.long, lat: @trash_tweet.lat, user_screen_name: @trash_tweet.user_screen_name, user_id: @trash_tweet.user_id, tweet_created_at: @trash_tweet.tweet_created_at)
+    text = SemanticAnalyzer.new(@trash_tweet.text).clear_text
+    bigrams = SemanticAnalyzer.build_bigrams(text).ngrams_of_all_data[2]
+    bigrams.each do |bigram, count|
+      dictionary = Dictionary.find_by_bigram(bigram)
+      dictionary ||= Dictionary.new(bigram: bigram)
+      dictionary.count += count
+      dictionary.save
+    end
+    @trash_tweet.destroy
+
+    redirect_to [:trash_tweets]
   end
 
   # GET /trash_tweets/1

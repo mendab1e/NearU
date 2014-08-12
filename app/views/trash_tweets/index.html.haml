@@ -14,16 +14,17 @@
       %th= model_class.human_attribute_name(:tweet_created_at)
       %th=t '.actions', :default => t("helpers.actions")
   %tbody
-    - @trash_tweets.each do |tweet|
+    - @trash_tweets.each do |trash_tweet|
       %tr
-        %td= link_to tweet.id, trash_tweet_path(tweet)
-        %td= link_to "@#{tweet.user_screen_name}", "http://twitter.com/#{tweet.user_screen_name}"
-        %td= tweet.user_id
-        %td= tweet.text
-        %td= tweet.long
-        %td= tweet.lat
-        %td=l tweet.tweet_created_at
+        %td= link_to trash_tweet.id, trash_tweet_path(trash_tweet)
+        %td= link_to "@#{trash_tweet.user_screen_name}", "http://twitter.com/#{trash_tweet.user_screen_name}"
+        %td= trash_tweet.user_id
+        %td= trash_tweet.text
+        %td= trash_tweet.long
+        %td= trash_tweet.lat
+        %td=l trash_tweet.tweet_created_at
         %td
-          = link_to t('.edit', :default => t("helpers.links.edit")), edit_tweet_path(tweet), :class => 'btn btn-default btn-xs'
-          = link_to t('.destroy', :default => t("helpers.links.destroy")), tweet_path(tweet), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs btn-danger'
+          = link_to t('.edit', :default => t("helpers.links.edit")), edit_trash_tweet_path(trash_tweet), :class => 'btn btn-default btn-xs'
+          = link_to t('.destroy', :default => t("helpers.links.destroy")), trash_tweet_path(trash_tweet), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs btn-danger'
+          = link_to t('.accept'), [:add_to_dictionary_and_accept, trash_tweet], class: 'btn btn-warning btn-xs'
 = will_paginate @trash_tweets, renderer: BootstrapPagination::Rails

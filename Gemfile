@@ -29,14 +29,16 @@ gem 'ruby-stemmer', require: 'lingua/stemmer'
 gem "rails_config"
 
 # Production
-gem "pg", ">= 0.11.0"
-gem 'activerecord-postgresql-adapter'
-gem 'unicorn'
+# gem "pg", ">= 0.11.0"
+# gem 'activerecord-postgresql-adapter'
+# gem 'unicorn'
 
 group :development do
   gem 'better_errors'
   gem 'annotate'
-  gem "rvm-capistrano"
+
+  # Deploy
+  # gem "rvm-capistrano"
 end
 
 group :development, :test do

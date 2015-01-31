@@ -1,0 +1,10 @@
+twitter:
+  consumer_key:        ""
+  consumer_secret:     ""
+  access_token:        ""
+  access_token_secret: ""
+
+city:
+  moscow: "37.18,55.55,38.05,55.97"
+  spb: "29.64,59.57,31.99,60.13"
+  ufa: "55.89,54.67,56.23,54.86"

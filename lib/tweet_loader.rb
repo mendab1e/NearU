@@ -51,9 +51,9 @@ class TweetLoader
     valid = false
     (cities.count / 4).times do |i|
       if cities[i * 4].to_f - 1 <= tweet.geo.long &&
-          tweet.geo.long <= cities[i * 4 + 2].to_f + 1 &&
-          cities[i * 4 + 1].to_f - 1 <= tweet.geo.lat &&
-          tweet.geo.lat <= cities[i * 4 + 3].to_f + 1
+         tweet.geo.long <= cities[i * 4 + 2].to_f + 1 &&
+         cities[i * 4 + 1].to_f - 1 <= tweet.geo.lat &&
+         tweet.geo.lat <= cities[i * 4 + 3].to_f + 1
         valid = true
       end
     end

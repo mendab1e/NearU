@@ -70,40 +70,13 @@ class BoardsController < ApplicationController
     end
   end
 
-  def notify
-    notify = YandexMoney::Notification.new(request.raw_post)
-    puts notify
-    if notify.acknowledge ExampleStore::Application.config.yandex_money_shop_secret
-      if notify.complete?
-        @cart = Cart.find(notify.item_id)
-        # check cart amount with notification amount
-        if @cart.total_price == notify.gross
-          # store complete order
-          @cart.status = 'success'
-          @cart.purchased_at = Time.now
-          @order = Order.create(:total => notify.gross,
-            :card_holder_name => notify.customer_id, # cause we don't have customer name in notification
-            :order_number => notify.transaction_id)
-          reset_session
-        else
-          # notification amount not match with cart amount
-          # set error code "100"
-          notify.set_response 100
-        end
-      end
-    end
-    res = notify.response
-    render text: res
+  private
+
+  def set_board
+    @board = Board.find(params[:id])
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_board
-      @board = Board.find(params[:id])
-    end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def board_params
-      params.require(:board).permit(:text, :full_text, :url, :lat, :long)
-    end
+  def board_params
+    params.require(:board).permit(:text, :full_text, :url, :lat, :long)
+  end
 end
